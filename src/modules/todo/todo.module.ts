@@ -16,5 +16,6 @@ import { TodoRepository } from './domain/repositories/todo.repository';
       useClass: PrismaTodoRepository,
     },
   ],
+  exports: [TodoRepository],
 })
 export class TodoModule {}

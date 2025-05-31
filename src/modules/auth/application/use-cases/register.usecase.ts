@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 import { UserRepository } from '../../../user/domain/repositories/user.repository';
 import { RegisterDto } from '../../domain/dto/register.dto';
@@ -14,12 +15,19 @@ export class RegisterUseCase {
   async execute(registerDto: RegisterDto): Promise<{ access_token: string }> {
     const { username, firstName, lastName, password } = registerDto;
     const now = new Date();
+    const hashesPassword = await bcrypt.hash(password, 10);
+
+    const isUsernameExist = await this.userRepository.findOneByUsername(username);
+
+    if (isUsernameExist) {
+      throw new BadRequestException('username is already exist');
+    }
 
     const newUser = await this.userRepository.create({
       username,
       firstName,
       lastName,
-      password,
+      password: hashesPassword,
     });
 
     const payload = { sub: newUser.id, username: newUser.username };

@@ -1,5 +1,6 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 import { UserRepository } from '../../../user/domain/repositories/user.repository';
 
@@ -13,7 +14,13 @@ export class LoginUseCase {
   async execute(username: string, password: string): Promise<{ access_token: string }> {
     const user = await this.userRepository.findOneByUsername(username);
 
-    if (!user || user.password !== password) {
+    if (!user) {
+      throw new NotFoundException('username is invalid');
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
       throw new UnauthorizedException('invalid credentials');
     }
 
