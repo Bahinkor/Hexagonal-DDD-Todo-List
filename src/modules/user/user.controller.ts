@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserUseCase } from './application/use-cases/create-user.usecase';
 import { UserRepository } from './domain/repositories/user.repository';
 import { User } from './domain/entities/user.entity';
-import { CreateUserDto } from './domain/dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UserController {

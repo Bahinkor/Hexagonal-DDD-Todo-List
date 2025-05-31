@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { UserRepository } from '../../../user/domain/repositories/user.repository';
-import { RegisterDto } from '../../domain/dto/register.dto';
+import { RegisterDto } from '../../dto/register.dto';
 import { ENV } from '../../../../common/config/env.config';
 
 @Injectable()

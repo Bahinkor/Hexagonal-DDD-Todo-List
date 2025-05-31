@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { TodoRepository } from '../../../todo/domain/repositories/todo.repository';
 import { UserRepository } from '../../../user/domain/repositories/user.repository';
-import { UserWithTodosDto } from '../../domain/dto/user-with-todos.dto';
+import { UserWithTodosDto } from '../../dto/user-with-todos.dto';
 
 @Injectable()
 export class GetMeUseCase {
