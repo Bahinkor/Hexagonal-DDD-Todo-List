@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 
 import { UserRepository } from '../../../user/domain/repositories/user.repository';
 import { RegisterDto } from '../../domain/dto/register.dto';
+import { ENV } from '../../../../common/config/env.config';
 
 @Injectable()
 export class RegisterUseCase {
@@ -15,7 +16,7 @@ export class RegisterUseCase {
   async execute(registerDto: RegisterDto): Promise<{ access_token: string }> {
     const { username, firstName, lastName, password } = registerDto;
     const now = new Date();
-    const hashesPassword = await bcrypt.hash(password, 10);
+    const hashesPassword = await bcrypt.hash(password, ENV.HASH_SALT);
 
     const isUsernameExist = await this.userRepository.findOneByUsername(username);
 

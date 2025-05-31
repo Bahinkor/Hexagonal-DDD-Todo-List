@@ -8,12 +8,13 @@ import { JwtStrategy } from './infra/strategies/jwt.strategy';
 import { RegisterUseCase } from './application/use-cases/register.usecase';
 import { TodoModule } from '../todo/todo.module';
 import { GetMeUseCase } from './application/use-cases/get-me.usecase';
+import { ENV } from '../../common/config/env.config';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: 'secretKey',
-      signOptions: { expiresIn: '1d' },
+      secret: ENV.JWT_SECRET,
+      signOptions: { expiresIn: ENV.EXPIRES_IN },
     }),
     UserModule,
     TodoModule,
